@@ -1,8 +1,20 @@
 #!/usr/bin/env bash
 
+set -euo pipefail
+
 echo "=========================================="
 echo "nf-core/rnaseq Pipeline Summary"
 echo "=========================================="
+
+# --------------------------------------------------
+# Check whether the data disk is mounted
+# --------------------------------------------------
+
+if ! mountpoint -q /data; then
+    echo "ERROR: The data disk is not mounted at /data."
+    echo "Please run 00_prepare_data_disk.sh first."
+    exit 1
+fi
 
 # --------------------------------------------------
 # Project directories
@@ -16,17 +28,18 @@ PIPELINE_INFO="${RESULTS_DIR}/pipeline_info"
 
 echo
 echo "Project Directory:"
-echo "$PROJECT_DIR"
+echo "${PROJECT_DIR}"
 
 echo
 echo "Results Directory:"
-echo "$RESULTS_DIR"
+echo "${RESULTS_DIR}"
 
+echo
 echo "=========================================="
-echo "Checking pipeline output..."
+echo "Checking pipeline output"
 echo "=========================================="
 
-if [ ! -d "$RESULTS_DIR" ]; then
+if [ ! -d "${RESULTS_DIR}" ]; then
     echo "ERROR: Results directory not found."
     echo "The pipeline may not have completed successfully."
     exit 1
@@ -84,38 +97,38 @@ fi
 
 echo
 echo "=========================================="
-echo "Checking Quantification Results"
+echo "Checking Salmon quantification files"
 echo "=========================================="
 
-find "$RESULTS_DIR" -name "*.sf"
-
-echo
-echo "=========================================="
-echo "Checking Gene Count Files"
-echo "=========================================="
-
-find "$RESULTS_DIR" -name "*featureCounts*"
+find "${RESULTS_DIR}" -name "*.sf"
 
 echo
 echo "=========================================="
-echo "Checking Alignment Files"
+echo "Checking featureCounts files"
 echo "=========================================="
 
-find "$RESULTS_DIR" -name "*.bam"
-
-echo
-echo "=========================================="
-echo "Disk Usage"
-echo "=========================================="
-
-du -sh "$RESULTS_DIR"
+find "${RESULTS_DIR}" -name "*featureCounts*"
 
 echo
 echo "=========================================="
-echo "Top-level Result Folders"
+echo "Checking STAR alignment files"
 echo "=========================================="
 
-ls -lh "$RESULTS_DIR"
+find "${RESULTS_DIR}" -name "*.bam"
+
+echo
+echo "=========================================="
+echo "Disk usage"
+echo "=========================================="
+
+du -sh "${RESULTS_DIR}"
+
+echo
+echo "=========================================="
+echo "Top-level result folders"
+echo "=========================================="
+
+ls -lh "${RESULTS_DIR}"
 
 echo
 echo "=========================================="
@@ -125,9 +138,9 @@ echo "=========================================="
 echo
 echo "Key output files:"
 echo "1. MultiQC report"
-echo "2. STAR alignment files"
+echo "2. STAR alignment BAM files"
 echo "3. Salmon quantification files"
-echo "4. featureCounts gene count matrix"
+echo "4. featureCounts gene count files"
 echo "5. Nextflow execution reports"
 
 echo
