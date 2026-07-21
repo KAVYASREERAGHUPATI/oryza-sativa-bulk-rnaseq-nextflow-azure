@@ -1,4 +1,5 @@
 #this file is used by the file: scripts/08_download_fastq.sh
+#this file should be created based on the sample data and before using the scripts/08_download_fastq.sh
 #This file should contain one SRA accession per line.
 
 #Example
