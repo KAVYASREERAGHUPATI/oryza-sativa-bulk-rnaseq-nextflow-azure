@@ -39,23 +39,20 @@ Operating System: Ubuntu Server 24.04 LTS (64-bit)
 **Important:** Azure Spot virtual machines can be interrupted or evicted when Azure requires the computing capacity. Therefore, Nextflow resume functionality and regular backup of important files are recommended.
 
 ............................................................................................................
-The analysis was executed in a Linux environment on Microsoft Azure. PuTTY was used to establish the SSH connection between the local Windows computer and the Azure virtual machine.WinSCP was used to transfer locally downloaded files from the Windows computer to the Linux virtual machine.
+The analysis was executed in a Linux environment on Microsoft Azure. PuTTY was used to establish the SSH connection between the local Windows computer and the Azure virtual mechine
 
 Software Category and 	Tool/Version:-
 SSH Client:	PuTTY
-File Transfer Utility:	WinSCP
-
 ............................................................................................................
 ## General Workflow
 
 The following steps were followed to prepare and execute the RNA-seq analysis:
 
-1. A Microsoft Azure Spot virtual machine was created with the required CPU, memory and storage capacity (     mentioned above).
+1. A Microsoft Azure Spot virtual machine was created with the required CPU, memory and storage capacity (mentioned above).
 2. Ubuntu Server 24.04 LTS was selected as the operating system.
 3. PuTTY was used to connect to the Azure virtual machine through SSH.
-4. Nextflow and the nf-core/rnaseq pipeline were installed on the Linux virtual machine.
-5. The *Oryza sativa* reference genome and GTF annotation files were downloaded from Ensembl Plants.
-6. The reference genome and annotation files were transferred from the local computer to the Azure virtual       machine using WinSCP.
+4. Nextflow and the nf-core/rnaseq pipeline were installed on the Linux virtual machine (VM).
+5. The *Oryza sativa* reference genome and GTF annotation files were downloaded to VM using the code.
 7. Publicly available RNA-seq sample files were downloaded directly to the Azure virtual machine from NCBI SRA or EMBL-EBI using command-line tools.
 8. A sample sheet containing the sample names and paired-end FASTQ file paths was prepared.
 9. The nf-core/rnaseq pipeline was executed using Nextflow.
@@ -64,10 +61,7 @@ The following steps were followed to prepare and execute the RNA-seq analysis:
 ............................................................................................................
 ## File Transfer Using WinSCP
 
-The following files were initially downloaded to the local computer from ensembel plants and transferred to the Azure Linux environment using WinSCP:
-Reference Genome: oryza_sativa.IRGSP-1.0.dna_sm.toplevel.fa.gz
-Annotation file : oryza_sativa.IRGSP-1.0.62.gtf.gz
-
+the output files were downloaded from linux VM to local computer usinfg winSCP
 ............................................................................................................
 ## nf-core/rnaseq Pipeline Workflow
 
@@ -87,3 +81,22 @@ Counts the reads assigned to each annotated gene.
         ↓
      MULTIQC
 Combines quality-control and pipeline reports into a single summary report.
+..................................................................................................................
+## Configuration and Storage
+
+The `nextflow.config` file can be modified according to the CPU, memory, and other resource specifications of the selected Azure virtual machine.
+
+The attached data disk, mounted at `/data`, is used to store all RNA-seq project files. These include:
+
+- FASTQ files
+- Reference genome and annotation files
+- SRA downloads
+- Temporary files
+- Nextflow work files
+- Pipeline results
+- Log files
+
+The scripts in the `scripts/` directory are configured to store these files under:
+
+/data/RNAseq_Project
+So, this prevents large RNA-seq files from being written to the operating system disk.
