@@ -1,4 +1,6 @@
+#this file is used by the file: scripts/08_download_fastq.sh
 #This file should contain one SRA accession per line.
+
 #Example
 SRR32212109
 SRR32212110
