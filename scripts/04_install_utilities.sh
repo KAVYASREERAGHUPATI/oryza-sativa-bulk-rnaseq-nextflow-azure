@@ -25,16 +25,18 @@ sudo apt install -y \
     vim \
     jq
 
+echo
 echo "=========================================="
 echo "Checking installed utilities"
 echo "=========================================="
 
 git --version
-curl --version
-wget --version
+curl --version | head -n 1
+wget --version | head -n 1
 pigz --version
 tree --version
 
+echo
 echo "=========================================="
-echo "Utility installation completed"
+echo "Utility installation completed successfully"
 echo "=========================================="
