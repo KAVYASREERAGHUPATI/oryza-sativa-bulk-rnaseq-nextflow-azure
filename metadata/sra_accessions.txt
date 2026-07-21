@@ -1,0 +1,9 @@
+#This file should contain one SRA accession per line.
+#Example
+SRR32212109
+SRR32212110
+SRR32212111
+SRR32212112
+SRR32212113
+SRR32212114
+...
