@@ -1,0 +1,6 @@
+#this file is used by the script 09_nextflow config
+#EXAMPLE:
+
+sample,fastq_1,fastq_2,strandedness
+SRR32212109,/data/RNAseq_Project/fastq/SRR32212109_1.fastq.gz,/data/RNAseq_Project/fastq/SRR32212109_2.fastq.gz,auto
+SRR32212110,/data/RNAseq_Project/fastq/SRR32212110_1.fastq.gz,/data/RNAseq_Project/fastq/SRR32212110_2.fastq.gz,auto
