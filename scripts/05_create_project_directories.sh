@@ -8,9 +8,15 @@ echo "=========================================="
 echo "Creating RNA-seq project directories"
 echo "=========================================="
 
-sudo mkdir -p "${PROJECT_DIR}"
+# Check if the Azure data disk is mounted
+if ! mountpoint -q /data; then
+    echo "ERROR: The Azure data disk is not mounted at /data."
+    echo "Please run 00_prepare_data_disk.sh first."
+    exit 1
+fi
 
-sudo chown -R "$USER":"$USER" "${PROJECT_DIR}"
+sudo mkdir -p "${PROJECT_DIR}"
+sudo chown "$USER":"$USER" "${PROJECT_DIR}"
 
 mkdir -p "${PROJECT_DIR}/fastq"
 mkdir -p "${PROJECT_DIR}/reference"
@@ -21,6 +27,8 @@ mkdir -p "${PROJECT_DIR}/work"
 mkdir -p "${PROJECT_DIR}/logs"
 mkdir -p "${PROJECT_DIR}/tmp"
 mkdir -p "${PROJECT_DIR}/downloads"
+mkdir -p "${PROJECT_DIR}/config"
+mkdir -p "${PROJECT_DIR}/sra_cache"
 
 echo "=========================================="
 echo "Project directory structure"
